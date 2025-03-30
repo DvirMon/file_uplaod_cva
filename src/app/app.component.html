@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>File Upload POC</h1>
+  
+  <form [formGroup]="form">
+    <app-file-upload
+      formControlName="files"
+      [multiple]="true"
+      accept="*/*"
+    ></app-file-upload>
+  </form>
+
+  <div class="file-list" *ngIf="files.length">
+    <h3>Uploaded Files:</h3>
+    <ul>
+      <li *ngFor="let file of files; let i = index">
+        {{ file.name }} ({{ (file.size / 1024).toFixed(2) }} KB)
+        <button (click)="removeFile(i)" class="delete-btn">Delete</button>
+      </li>
+    </ul>
+  </div>
+</div>
