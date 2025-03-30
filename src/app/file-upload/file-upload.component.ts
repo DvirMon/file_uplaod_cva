@@ -1,6 +1,6 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadControl } from '../types/file-upload.types';
 
 @Component({
@@ -18,6 +18,12 @@ import { FileUploadControl } from '../types/file-upload.types';
   ]
 })
 export class FileUploadComponent implements ControlValueAccessor {
+
+  nfb = inject(NonNullableFormBuilder);
+
+  list = this.nfb.array<FormControl<File>>([])
+
+
   @Input() multiple = false;
   @Input() accept = '*/*';
 
@@ -66,8 +72,9 @@ export class FileUploadComponent implements ControlValueAccessor {
       this.handleFiles(input.files);
     }
   }
-
+  
   private handleFiles(fileList: FileList) {
+    console.log(fileList)
     const files = Array.from(fileList);
     if (this.multiple) {
       const currentFiles = this.onChange as unknown as File[];

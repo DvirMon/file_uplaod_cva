@@ -19,12 +19,13 @@ export class AppComponent {
   constructor(private fb: FormBuilder) {}
 
   get files(): File[] {
-    return this.form.get('files')?.value || [];
+    return this.form.controls.files.value || [];
   }
 
   removeFile(index: number) {
     const currentFiles = [...this.files];
     currentFiles.splice(index, 1);
-    this.form.get('files')?.setValue(currentFiles);
+    // this.form.get('files')?.setValue(currentFiles);
+    this.form.get('files')?.reset()
   }
 }

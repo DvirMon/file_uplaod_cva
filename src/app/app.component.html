@@ -4,15 +4,15 @@
   <form [formGroup]="form">
     <app-file-upload
       formControlName="files"
-      [multiple]="true"
+      [multiple]="false"
       accept="*/*"
     ></app-file-upload>
   </form>
 
-  <div class="file-list" *ngIf="files.length">
+  <div class="file-list" *ngIf="form.controls.files.value?.length">
     <h3>Uploaded Files:</h3>
     <ul>
-      <li *ngFor="let file of files; let i = index">
+      <li *ngFor="let file of form.controls.files.value; let i = index">
         {{ file.name }} ({{ (file.size / 1024).toFixed(2) }} KB)
         <button (click)="removeFile(i)" class="delete-btn">Delete</button>
       </li>
